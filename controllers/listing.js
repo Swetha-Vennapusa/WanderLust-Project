@@ -7,22 +7,22 @@ const Listing = require("../models/listing");
 
 module.exports.index = async (req,res) => {
     const allListings = await Listing.find({});
-    res.render("listings/index.ejs",{allListings});
+    res.render("listings/index",{allListings});
 };
 
 module.exports.renderNewForm = (req,res) => {
-    res.render("listings/new.ejs")
+    res.render("listings/new")
 };
 
 module.exports.category = async(req,res)=>{
     let {category} = req.params;
     let allListings = await Listing.find({category:category});
-    res.render("listings/index.ejs",{allListings});
+    res.render("listings/index",{allListings});
 }
 module.exports.search = async(req,res) =>{
     let name = req.query.q;
     let allListings = await Listing.find({title:name});
-    res.render("listings/index.ejs",{allListings});
+    res.render("listings/index",{allListings});
 }
 module.exports.output = async(req,res,next) => {
     let{place} = req.params;
@@ -30,7 +30,7 @@ module.exports.output = async(req,res,next) => {
     if (allListings.length === 0) {
         return res.redirect('/listings/index');
     }
-    res.render('listings/index.ejs', { allListings });
+    res.render('listings/index', { allListings });
 }
 
 module.exports.showListing = async(req,res) => {
@@ -48,7 +48,7 @@ module.exports.showListing = async(req,res) => {
         req.flash("error","Listing you requested for does not exist!");
         res.redirect("/listings");
     }
-    res.render("listings/show.ejs",{listing});
+    res.render("listings/show",{listing});
 };
 
 // module.exports.createListing = async (req,res,next) => {
@@ -96,7 +96,7 @@ module.exports.renderEditForm = async (req,res) => {
     }
     let originalImageUrl = listing.image.url;
     originalImageUrl= originalImageUrl.replace("/upload","/upload/w_250");
-    res.render("listings/edit.ejs",{listing,originalImageUrl});
+    res.render("listings/edit",{listing,originalImageUrl});
 };
 
 module.exports.updateListing = async(req,res) => {
