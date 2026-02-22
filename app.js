@@ -2,11 +2,11 @@
 //     require('dotenv').config();
 // }
 require('dotenv').config();
-console.log("SECRET VALUE:", process.env.SECRET);
+// console.log("SECRET VALUE:", process.env.SECRET);
 
-console.log("CLOUD NAME:", process.env.CLOUD_NAME);
-console.log("CLOUD KEY:", process.env.CLOUD_API_KEY);
-console.log("CLOUD SECRET:", process.env.CLOUD_API_SECRET);
+// console.log("CLOUD NAME:", process.env.CLOUD_NAME);
+// console.log("CLOUD KEY:", process.env.CLOUD_API_KEY);
+// console.log("CLOUD SECRET:", process.env.CLOUD_API_SECRET);
 
 
 const express = require("express");
@@ -133,16 +133,20 @@ app.use("/", userRouter);
 // });
 app.get("/favicon.ico", (req, res) => res.status(204));
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 app.all("*",(req,res,next) =>{
     next(new ExpressError(404,"Page Not Found"));
 });
 
 app.use((err,req,res,next) => {
-     console.log("====== ERROR START ======");
-    console.log(err);
-    console.log("====== ERROR END ======");
+    //  console.log("====== ERROR START ======");
+    // console.log(err);
+    // console.log("====== ERROR END ======");
     let {statusCode=500,message="Something Went Wrong"} = err;
-    res.status(statusCode).render("error.ejs",{message});
+    res.status(statusCode).render("error",{message});
     //res.status(statusCode).send(message);
 });
 
